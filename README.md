@@ -15,10 +15,15 @@ The tasks assigned by ALX for this project are as follows:
 8. **Piping:** Support command piping using the `|` symbol to redirect output from one command as input to another command.
 
 ## Implementation Details
-In this repository, I have implemented a simple shell that fulfills the requirements outlined by ALX. The code is written in the C programming language and provides a basic command-line interface. The shell supports parsing of user input, execution of both built-in and external commands, background processes, input/output redirection, and command piping.
+In this repository, we have implemented a simple shell that fulfills the requirements outlined by ALX. The code is written in the C programming language and provides a basic command-line interface. The shell supports parsing of user input, execution of both built-in and external commands, background processes, input/output redirection, and command piping.
 
 
 
 ## Acknowledgements
-I would like to express my gratitude to ALX for assigning this project and providing the opportunity to delve into the world of shell programming. Their guidance and support throughout the project were invaluable in helping us develop my skills in C and systems programming.
+We would like to express our gratitude to ALX for assigning this project and providing the opportunity to deive into the world of shell programming. Their guidance and support throughout the project were invaluable in helping us develop our skills in C and systems programming.
 
+
+
+made by :
+**boubakri fatima.zahra : fatyboubakri31@gmail.com
+ Zakaria ayoub : ayoub.don.zakaria@gmail.com
