@@ -87,4 +87,3 @@ char **parse(char *buffer, char *delim)
         return (NULL);
     return (ar_prs);
 }
-
