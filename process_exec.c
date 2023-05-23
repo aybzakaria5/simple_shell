@@ -10,10 +10,14 @@ void handl_ctrlc(int signal)
 	(void)signal;
 	puts("($) ");
 }
-
-void builtin_env()
+/**
+ * builtin_env - print the environment variables
+ *
+*/
+void builtin_env(void)
 {
 	int i = 0;
+
 	while (environ[i])
 	{
 		puts(environ[i]);
@@ -27,7 +31,6 @@ void builtin_env()
  */
 void readPrompt(void)
 {
-	int exiting = 0;
 	int exit_status = EXIT_SUCCESS;
 	size_t buf_size = 0;
 	char **ar_parsed;
@@ -42,33 +45,23 @@ void readPrompt(void)
 		puts("($) ");
 		/* reads input */
 		n_reads = getline(&buf, &buf_size, stdin);
-
 		/* handle empty input */
-
-		if (strcmp(buf, "\n") == 0)
-		{
+		if (_strcmp(buf, "\n") == 0)
 			continue;
-		}
 
 		if (n_reads == -1)
 		{
 			putchar('\n');
-			exiting = 1;
+			continue;
 			exit_status = EXIT_FAILURE;
 		}
 		else
 		{
-
 			ar_parsed = parse(buf, " \t\n");
-
-			if (strcmp(ar_parsed[0], "exit") == 0)
-			{
-				exiting = 1;
-			}
-			else if (strcmp(ar_parsed[0], "env") == 0)
-			{
+			if (_strcmp(ar_parsed[0], "exit") == 0)
+				continue;
+			else if (_strcmp(ar_parsed[0], "env") == 0)
 				builtin_env();
-			}
 			else
 				execute_command(ar_parsed);
 		}
