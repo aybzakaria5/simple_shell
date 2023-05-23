@@ -1,5 +1,23 @@
 #include "shell.h"
 
+<<<<<<< HEAD
+=======
+
+
+/**
+ * handl_ctrlc - handls the ctrl c signal
+ * *@signal: the signal
+*/
+
+ void handl_ctrlc(int signal)
+{
+    (void)signal;
+    puts("($) ");
+}
+
+
+      
+>>>>>>> ayoub
 /**
  * handl_ctrlc - handls the ctrl c signal
  * @signal: the signal
@@ -21,7 +39,13 @@ void readPrompt(void)
     char **ar_parsed;
     int n_reads;
     char *buf = NULL;
+<<<<<<< HEAD
     signal(SIGINT, handl_ctrlc);
+=======
+
+  signal(SIGINT, handl_ctrlc);
+
+>>>>>>> ayoub
 
     while (1)
     {
@@ -29,8 +53,13 @@ void readPrompt(void)
         puts("($) ");
         /* reads input */
         n_reads = getline(&buf, &buf_size, stdin);
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> ayoub
         /* handle empty input */
+
         if (strcmp(buf, "\n") == 0)
         {
             continue;
@@ -53,6 +82,10 @@ void readPrompt(void)
         }
         /*handl the builtin env*/
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> ayoub
         /* start command invoking */
         execute_command(ar_parsed);
         /* free args before next parsing */
@@ -64,6 +97,10 @@ void readPrompt(void)
  * @ar_parsed: the array of commands we want to excute
  *
  */
+/**
+ * builtin_env - a fucntion that prints the envirment vars in the current path
+ */
+
 void execute_command(char **ar_parsed)
 {
     char *cmd;
@@ -80,6 +117,7 @@ void execute_command(char **ar_parsed)
             execve(cmd, ar_parsed, environ);
             exit(0);
         }
+
         else
         {
             wait(&status);
@@ -89,6 +127,11 @@ void execute_command(char **ar_parsed)
     {
         puts("command not found");
     }
+<<<<<<< HEAD
     if (cmd != ar_parsed[0])
         free(cmd);
 }
+=======
+    free(cmd);
+}
+>>>>>>> ayoub
