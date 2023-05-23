@@ -13,27 +13,37 @@ char *getpath(char *cmd)
 	struct stat st;
 	int path_exists = 0;
 
-	if (cmd && (cmd[0] == '/' || cmd[0] == '.'))
+
+	if (cmd && strchr(cmd, '/'))
 	{
 		if (stat(cmd, &st) == 0)
-			return (cmd);
-	}
-	dir_check = strtok(path, ":");
-
-	while (dir_check)
-	{
-		full_path = malloc(strlen(dir_check) + strlen(cmd) + 2);
-		strcpy(full_path, dir_check);
-		strcat(full_path, "/");
-		strcat(full_path, cmd);
-
-		if (stat(full_path, &st) == 0)
 		{
-			path_exists = 1;
-			break;
+			
+			 full_path = malloc(strlen(cmd) + 1);
+			 strcpy(full_path, cmd);
+			 path_exists = 1;
+
 		}
-		free(full_path);
-		dir_check = strtok(NULL, ":");
+	}
+	else
+	{
+		dir_check = strtok(path, ":");
+
+		while (dir_check)
+		{
+			full_path = malloc(strlen(dir_check) + strlen(cmd) + 2);
+			strcpy(full_path, dir_check);
+			strcat(full_path, "/");
+			strcat(full_path, cmd);
+
+			if (stat(full_path, &st) == 0)
+			{
+				path_exists = 1;
+				break;
+			}
+			free(full_path);
+			dir_check = strtok(NULL, ":");
+		}
 	}
 	free(path);
 	return (path_exists ? full_path : NULL);
@@ -50,7 +60,7 @@ char *_getenv(const char *env_name)
 	char *key_finder;
 	char *env_copy;
 	char *value = NULL;
-  
+
 	while (environ[env_count])
 	{
 		env_copy = strdup(environ[env_count]);
