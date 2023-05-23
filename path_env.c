@@ -50,7 +50,7 @@ char *_getenv(const char *env_name)
 	char *key_finder;
 	char *env_copy;
 	char *value = NULL;
-
+  
 	while (environ[env_count])
 	{
 		env_copy = strdup(environ[env_count]);

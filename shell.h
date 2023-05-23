@@ -14,12 +14,8 @@ int _putchar(char c);
 char *_getenv(const char *env_name);
 char **parse(char *buffer, char *delim);
 void execute_command(char **ar_parsed);
-<<<<<<< HEAD
-void readPrompt(void);
-=======
 void readPrompt();
 void handl_ctrlc(int signal);
->>>>>>> ayoub
 char *getpath(char *cmd);
 void _puts(char *str);
 int _putchar(char c);
