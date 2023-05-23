@@ -3,12 +3,22 @@
 /**
  * handl_ctrlc - handls the ctrl c signal
  * @signal: the signal
-*/
+ */
 
 void handl_ctrlc(int signal)
 {
 	(void)signal;
 	puts("($) ");
+}
+
+void builtin_env()
+{
+	int i = 0;
+	while (environ[i])
+	{
+		puts(environ[i]);
+		i++;
+	}
 }
 
 /**
@@ -17,6 +27,8 @@ void handl_ctrlc(int signal)
  */
 void readPrompt(void)
 {
+	int exiting = 0;
+	int exit_status = EXIT_SUCCESS;
 	size_t buf_size = 0;
 	char **ar_parsed;
 	int n_reads;
@@ -41,20 +53,28 @@ void readPrompt(void)
 		if (n_reads == -1)
 		{
 			putchar('\n');
-			free(buf);
-			exit(1);
+			exiting = 1;
+			exit_status = EXIT_FAILURE;
 		}
-
-		ar_parsed = parse(buf, " \t\n");
-
-		if (strcmp(ar_parsed[0], "exit") == 0)
+		else
 		{
-			free(buf);
-			free(ar_parsed);
-			exit(0);
+
+			ar_parsed = parse(buf, " \t\n");
+
+			if (strcmp(ar_parsed[0], "exit") == 0)
+			{
+				exiting = 1;
+			}
+			else if (strcmp(ar_parsed[0], "env") == 0)
+			{
+				builtin_env();
+			}
+			else
+				execute_command(ar_parsed);
 		}
-		execute_command(ar_parsed);
+		free(buf);
 		free(ar_parsed);
+		exit(exit_status);
 	}
 }
 /**
