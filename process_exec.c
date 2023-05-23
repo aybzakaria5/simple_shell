@@ -1,5 +1,7 @@
 #include "shell.h"
 
+<<<<<<< HEAD
+=======
 
 
 /**
@@ -15,19 +17,35 @@
 
 
       
+>>>>>>> ayoub
 /**
- *readPrompt - a function that reads the input from the user and sends it
+ * handl_ctrlc - handls the ctrl c signal
+ * @signal: the signal
+*/
+
+void handl_ctrlc(int signal)
+{
+    (void)signal;
+    puts("($) ");
+}
+
+/**
+ *readPrompt - reads the input from the user and sends it
  *to be excuted
  */
-void readPrompt()
+void readPrompt(void)
 {
     size_t buf_size = 0;
     char **ar_parsed;
     int n_reads;
     char *buf = NULL;
+<<<<<<< HEAD
+    signal(SIGINT, handl_ctrlc);
+=======
 
   signal(SIGINT, handl_ctrlc);
 
+>>>>>>> ayoub
 
     while (1)
     {
@@ -35,7 +53,11 @@ void readPrompt()
         puts("($) ");
         /* reads input */
         n_reads = getline(&buf, &buf_size, stdin);
+<<<<<<< HEAD
+    
+=======
 
+>>>>>>> ayoub
         /* handle empty input */
 
         if (strcmp(buf, "\n") == 0)
@@ -60,17 +82,19 @@ void readPrompt()
         }
         /*handl the builtin env*/
 
+<<<<<<< HEAD
+=======
 
+>>>>>>> ayoub
         /* start command invoking */
         execute_command(ar_parsed);
         /* free args before next parsing */
         free(ar_parsed);
     }
 }
-
 /**
- *execute_command - a function that excutes the command line
- *@ar_parsed - the array of commands we want to excute
+ * execute_command - a function that executes the command line
+ * @ar_parsed: the array of commands we want to excute
  *
  */
 /**
@@ -103,5 +127,11 @@ void execute_command(char **ar_parsed)
     {
         puts("command not found");
     }
+<<<<<<< HEAD
+    if (cmd != ar_parsed[0])
+        free(cmd);
+}
+=======
     free(cmd);
 }
+>>>>>>> ayoub

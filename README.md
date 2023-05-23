@@ -20,7 +20,7 @@ In this repository, we have implemented a simple shell that fulfills the require
 
 
 ## Acknowledgements
-We would like to express our gratitude to ALX for assigning this project and providing the opportunity to deive into the world of shell programming. Their guidance and support throughout the project were invaluable in helping us develop our skills in C and systems programming.
+We would like to express our gratitude to ALX for assigning this project and providing the opportunity to dive into the world of shell programming. Their guidance and support throughout the project were invaluable in helping us develop our skills in C and systems programming.
 
 
 
