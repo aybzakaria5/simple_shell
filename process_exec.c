@@ -8,7 +8,7 @@
 void handl_ctrlc(int signal)
 {
 	(void)signal;
-	puts("($) ");
+	_puts("($) ");
 }
 /**
  * builtin_env - print the environment variables
@@ -42,7 +42,7 @@ void readPrompt(void)
 	while (1)
 	{
 		/* type prompt */
-		puts("($) ");
+		_puts("($) ");
 		/* reads input */
 		n_reads = getline(&buf, &buf_size, stdin);
 		/* handle empty input */
@@ -101,7 +101,7 @@ void execute_command(char **ar_parsed)
 	}
 	else
 	{
-		puts("command not found");
+		_puts("command not found");
 	}
 	if (cmd != ar_parsed[0])
 		free(cmd);
