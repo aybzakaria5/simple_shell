@@ -1,14 +1,33 @@
 #include "shell.h"
+
+
+
+/**
+ * handl_ctrlc - handls the ctrl c signal
+ * *@signal: the signal
+*/
+
+ void handl_ctrlc(int signal)
+{
+    (void)signal;
+    puts("($) ");
+}
+
+
+      
 /**
  *readPrompt - a function that reads the input from the user and sends it
  *to be excuted
  */
 void readPrompt()
 {
-    char *buf = NULL;
     size_t buf_size = 0;
     char **ar_parsed;
     int n_reads;
+    char *buf = NULL;
+
+  signal(SIGINT, handl_ctrlc);
+
 
     while (1)
     {
@@ -16,12 +35,13 @@ void readPrompt()
         puts("($) ");
         /* reads input */
         n_reads = getline(&buf, &buf_size, stdin);
+
         /* handle empty input */
+
         if (strcmp(buf, "\n") == 0)
         {
             continue;
         }
-        
         if (n_reads == -1)
         {
             putchar('\n');
@@ -30,6 +50,7 @@ void readPrompt()
         }
         /* parse command */
         ar_parsed = parse(buf, " \t\n");
+
         /* handle exit command */
         if (strcmp(ar_parsed[0], "exit") == 0)
         {
@@ -37,6 +58,9 @@ void readPrompt()
             free(ar_parsed);
             exit(0);
         }
+        /*handl the builtin env*/
+
+
         /* start command invoking */
         execute_command(ar_parsed);
         /* free args before next parsing */
@@ -49,31 +73,35 @@ void readPrompt()
  *@ar_parsed - the array of commands we want to excute
  *
  */
+/**
+ * builtin_env - a fucntion that prints the envirment vars in the current path
+ */
+
 void execute_command(char **ar_parsed)
 {
     char *cmd;
     int status;
     pid_t pid;
+    cmd = getpath(ar_parsed[0]);
 
-    pid = fork();
-    if (pid == 0)
+    if (cmd)
     {
-        cmd = getpath(ar_parsed[0]);
-        if (cmd)
+        pid = fork();
+        if (pid == 0)
         {
             /* execute command */
             execve(cmd, ar_parsed, environ);
-            free(cmd);
             exit(0);
         }
+
         else
         {
-            puts("command not found");
-            exit(0);
+            wait(&status);
         }
     }
     else
     {
-        wait(&status);
+        puts("command not found");
     }
+    free(cmd);
 }
