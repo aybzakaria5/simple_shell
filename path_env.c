@@ -121,10 +121,12 @@ int bi_exit()
 int bi_env()
 {
 	int i = 0;
+	char **env = environ;
 
-	while (environ[i])
+	while (env[i])
 	{
-		puts(environ[i]);
+		puts(env[i]);
+		putchar('\n');
 		i++;
 	}
 	return (1);
