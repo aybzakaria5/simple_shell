@@ -18,7 +18,7 @@ char *getpath(char *cmd)
 	{
 		if (stat(cmd, &st) == 0)
 		{
-			full_path = malloc(strlen(cmd) + 1);
+			full_path = malloc(_strlen(cmd) + 1);
 			_strcpy(full_path, cmd);
 			path_exists = 1;
 
@@ -30,7 +30,7 @@ char *getpath(char *cmd)
 
 		while (dir_check)
 		{
-			full_path = malloc(strlen(dir_check) + strlen(cmd) + 2);
+			full_path = malloc(_strlen(dir_check) + _strlen(cmd) + 2);
 			_strcpy(full_path, dir_check);
 			_strcat(full_path, "/");
 			_strcat(full_path, cmd);
