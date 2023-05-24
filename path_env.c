@@ -113,7 +113,7 @@ int (*builtin_functions[]) () = { &bi_exit, &bi_env };
 */
 int bi_exit()
 {
-	exit(0);
+	_exit(0);
 }
 /**
  * bi_env - 
