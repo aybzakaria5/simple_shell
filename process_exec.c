@@ -55,12 +55,13 @@ int readPrompt(void)
 
 		if (n_reads == -1)
 		{
-			/*putchar('\n');*/
+
+			if (isatty(STDIN_FILENO))
+				putchar('\n');
 			exiting = 1;
 		}
 		else if (strcmp(buf, "\n") == 0)
 		{
-			puts(buf);
 			continue;
 		}
 		else
