@@ -105,23 +105,25 @@ char **parse(char *buffer, char *delim)
 }
 
 char *builtin_cmd[] = { "exit", "env" };
-int (*builtin_functions[]) () = { &bi_exit, &bi_env };
+int (*builtin_functions[]) (char **) = { &bi_exit, &bi_env };
 /**bi_exit - exit the programm
  * @args - program arguments
  *
  * Return: 0
 */
-int bi_exit()
+int bi_exit(char **args)
 {
-	_exit(0);
+	(void) args;
+	return (0);
 }
 /**
  * bi_env - 
 */
-int bi_env()
+int bi_env(char **args)
 {
 	int i = 0;
 
+	(void) args;
 	while (environ[i])
 	{
 		puts(environ[i]);

@@ -10,9 +10,9 @@
 #include <signal.h>
 extern char **environ;
 extern char *builtin_cmd[];
-extern int (*builtin_functions[]) ();
-int bi_exit();
-int bi_env();
+extern int (*builtin_functions[]) (char **);
+int bi_exit(char **args);
+int bi_env(char **args);
 void _puts(char *str);
 int _putchar(char c);
 char *_getenv(const char *env_name);
