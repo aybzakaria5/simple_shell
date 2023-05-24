@@ -37,38 +37,48 @@ void readPrompt(void)
 	int n_reads;
 	char *buf = NULL;
 
-	signal(SIGINT, handl_ctrlc);
+    signal(SIGINT, handl_ctrlc);
 
 	while (1)
 	{
 		/* type prompt */
-		_puts("($) ");
+		puts("($) ");
 		/* reads input */
 		n_reads = getline(&buf, &buf_size, stdin);
+
 		/* handle empty input */
-		if (_strcmp(buf, "\n") == 0)
+
+		if (strcmp(buf, "\n") == 0)
+		{
 			continue;
+		}
 
 		if (n_reads == -1)
 		{
 			putchar('\n');
-			continue;
 			exit_status = EXIT_FAILURE;
 		}
 		else
 		{
+
 			ar_parsed = parse(buf, " \t\n");
-			if (_strcmp(ar_parsed[0], "exit") == 0)
-				continue;
-			else if (_strcmp(ar_parsed[0], "env") == 0)
+
+			if (strcmp(ar_parsed[0], "exit") == 0)
+			{
+				exit(EXIT_SUCCESS);
+			}
+			else if (strcmp(ar_parsed[0], "env") == 0)
+			{
 				builtin_env();
+			}
 			else
 				execute_command(ar_parsed);
+			free(ar_parsed);
 		}
 		free(buf);
-		free(ar_parsed);
-		exit(exit_status);
+		buf = NULL;
 	}
+	exit(exit_status);
 }
 /**
  * execute_command - a function that executes the command line
@@ -91,7 +101,7 @@ void execute_command(char **ar_parsed)
 		{
 			/* execute command */
 			execve(cmd, ar_parsed, environ);
-			exit(0);
+			/*exit(0);*/
 		}
 
 		else
