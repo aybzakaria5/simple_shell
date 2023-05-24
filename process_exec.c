@@ -8,7 +8,7 @@
 void handl_ctrlc(int signal)
 {
 	(void)signal;
-	_puts("($) ");
+	_puts("\n($) ");
 }
 /**
  * builtin_env - print the environment variables
@@ -20,7 +20,7 @@ void builtin_env(void)
 
 	while (environ[i])
 	{
-		puts(environ[i]);
+		_puts(environ[i]);
 		i++;
 	}
 }
@@ -42,20 +42,20 @@ void readPrompt(void)
 	while (1)
 	{
 		/* type prompt */
-		puts("($) ");
+		_puts("($) ");
 		/* reads input */
 		n_reads = getline(&buf, &buf_size, stdin);
 
 		/* handle empty input */
 
-		if (strcmp(buf, "\n") == 0)
+		if (_strcmp(buf, "\n") == 0)
 		{
 			continue;
 		}
 
 		if (n_reads == -1)
 		{
-			putchar('\n');
+			_putchar('\n');
 			exit_status = EXIT_FAILURE;
 		}
 		else
@@ -63,11 +63,11 @@ void readPrompt(void)
 
 			ar_parsed = parse(buf, " \t\n");
 
-			if (strcmp(ar_parsed[0], "exit") == 0)
+			if (_strcmp(ar_parsed[0], "exit") == 0)
 			{
 				exit(EXIT_SUCCESS);
 			}
-			else if (strcmp(ar_parsed[0], "env") == 0)
+			else if (_strcmp(ar_parsed[0], "env") == 0)
 			{
 				builtin_env();
 			}
