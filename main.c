@@ -11,7 +11,6 @@ int is_interactive;
 int main(int ac, char **av)
 {
 	(void)ac;
-	(void)av;
-	readPrompt();
+	readPrompt(av[0]);
 	return (0);
 }

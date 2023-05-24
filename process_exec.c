@@ -33,7 +33,7 @@ void handle_signale()
  *readPrompt - reads the input from the user and sends it
  *to be excuted
  */
-int readPrompt(void)
+int readPrompt(char *shell_name)
 {
 	int exiting = 0, notfound = 0, i, statu;
 	size_t buf_size = 0;
@@ -85,7 +85,7 @@ int readPrompt(void)
 				}
 			}
 			if (!notfound)
-				execute_command(ar_parsed);
+				execute_command(ar_parsed, shell_name);
 
 			free(ar_parsed);
 		}
@@ -103,7 +103,7 @@ int readPrompt(void)
  *
  */
 
-void execute_command(char **ar_parsed)
+void execute_command(char **ar_parsed, char *shell_name)
 {
 	char *cmd;
 	int status;
@@ -127,7 +127,7 @@ void execute_command(char **ar_parsed)
 	}
 	else
 	{
-		puts("command not found");
+		perror(shell_name);
 	}
 	if (cmd != ar_parsed[0])
 		free(cmd);

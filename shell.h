@@ -10,15 +10,15 @@
 #include <signal.h>
 extern char **environ;
 extern char *builtin_cmd[];
-extern int (*builtin_functions[]) (char **);
+extern int (*builtin_functions[])(char **);
 int bi_exit(char **args);
 int bi_env(char **args);
 void _puts(char *str);
 int _putchar(char c);
 char *_getenv(const char *env_name);
 char **parse(char *buffer, char *delim);
-void execute_command(char **ar_parsed);
-int readPrompt(void);
+void execute_command(char **ar_parsed, char *shell_name);
+int readPrompt(char *shell_name);
 void handl_ctrlc(int signal);
 char *getpath(char *cmd);
 void builtin_env(void);
