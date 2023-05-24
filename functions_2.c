@@ -33,7 +33,7 @@ char *_strdup(char *str)
 
 	if (new_str != NULL)
 	{
-		_memcpy(new_str, str, len);
+		memcpy(new_str, str, len);
 	}
 	return (new_str);
 }

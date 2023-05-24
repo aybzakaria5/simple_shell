@@ -67,7 +67,7 @@ char *_getenv(const char *env_name)
 
 		if (_strcmp(env_name, key_finder) == 0)
 		{
-			value = strdup(strtok(NULL, "\n"));
+			value = _strdup(strtok(NULL, "\n"));
 		}
 		free(env_copy);
 		env_count++;
