@@ -18,10 +18,9 @@ char *getpath(char *cmd)
 	{
 		if (stat(cmd, &st) == 0)
 		{
-			
-			 full_path = malloc(strlen(cmd) + 1);
-			 strcpy(full_path, cmd);
-			 path_exists = 1;
+			full_path = malloc(_strlen(cmd) + 1);
+			_strcpy(full_path, cmd);
+			path_exists = 1;
 
 		}
 	}
@@ -31,10 +30,10 @@ char *getpath(char *cmd)
 
 		while (dir_check)
 		{
-			full_path = malloc(strlen(dir_check) + strlen(cmd) + 2);
-			strcpy(full_path, dir_check);
-			strcat(full_path, "/");
-			strcat(full_path, cmd);
+			full_path = malloc(_strlen(dir_check) + _strlen(cmd) + 2);
+			_strcpy(full_path, dir_check);
+			_strcat(full_path, "/");
+			_strcat(full_path, cmd);
 
 			if (stat(full_path, &st) == 0)
 			{
@@ -63,12 +62,12 @@ char *_getenv(const char *env_name)
 
 	while (environ[env_count])
 	{
-		env_copy = strdup(environ[env_count]);
+		env_copy = _strdup(environ[env_count]);
 		key_finder = strtok(env_copy, "=");
 
-		if (strcmp(env_name, key_finder) == 0)
+		if (_strcmp(env_name, key_finder) == 0)
 		{
-			value = strdup(strtok(NULL, "\n"));
+			value = _strdup(strtok(NULL, "\n"));
 		}
 		free(env_copy);
 		env_count++;
