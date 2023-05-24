@@ -58,11 +58,14 @@ int readPrompt(void)
 
 		if (n_reads == -1)
 		{
-			putchar('\n');
+			/*putchar('\n');*/
 			exiting = 1;
 		}
 		else
 		{
+			if (n_reads > 0 && buf[n_reads - 1] == '\n')
+				buf[n_reads - 1] = '\0';
+
 			ar_parsed = parse(buf, " \t\n");
 			for (i = 0; i < 2; i++)
 			{
