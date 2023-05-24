@@ -39,8 +39,8 @@ int readPrompt(void)
 	size_t buf_size = 0;
 	char **ar_parsed;
 	int n_reads;
-	/*char *buf = NULL;*/
 
+	/*char *buf = NULL;*/
 	signal(SIGINT, handl_ctrlc);
 
 	while (!exiting)
@@ -51,15 +51,17 @@ int readPrompt(void)
 
 		/* reads input */
 		n_reads = getline(&buf, &buf_size, stdin);
-
 		/* handle empty input */
-		if (strcmp(buf, "\n") == 0)
-			continue;
 
 		if (n_reads == -1)
 		{
 			/*putchar('\n');*/
 			exiting = 1;
+		}
+		else if (strcmp(buf, "\n") == 0)
+		{
+			puts(buf);
+			continue;
 		}
 		else
 		{
