@@ -68,12 +68,12 @@ int readPrompt(void)
                 if (strcmp(ar_parsed[0], builtin_cmd[i]) == 0)
                 {
                     notfound = 1;
-                    statu = (*builtin_functions[i])(ar_parsed);
+                    statu = (*builtin_functions[i])();
                     if (!statu)
                     {
                         free(ar_parsed);
                         free(buf);
-                        return (statu);
+                        exit (statu);
                     }
                 }
             }
