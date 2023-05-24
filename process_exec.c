@@ -78,7 +78,7 @@ void readPrompt(void)
 
             if (strcmp(ar_parsed[0], "exit") == 0)
                 exiting = 1;
-            else if (strcmp(ar_parsed[0], "env") == 0)
+            else if (strcmp(ar_parsed[0], "env\n") == 0)
                 builtin_env();
             else
                 execute_command(ar_parsed);
