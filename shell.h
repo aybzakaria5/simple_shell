@@ -26,4 +26,5 @@ char *_strcpy(char *dest, char *src);
 char *_memcpy(char *dest, char *src, unsigned int n);
 char *_strdup(char *str);
 int _strlen(char *s);
+void *_realloc(void *ptr, unsigned int new_size);
 #endif /* #define SHELL_H */
