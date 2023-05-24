@@ -9,12 +9,16 @@
 #include <sys/stat.h>
 #include <signal.h>
 extern char **environ;
+extern char *builtin_cmd[];
+extern int (*builtin_functions[]) (char **);
+int bi_exit(char **args);
+int bi_env(char **args);
 void _puts(char *str);
 int _putchar(char c);
 char *_getenv(const char *env_name);
 char **parse(char *buffer, char *delim);
 void execute_command(char **ar_parsed);
-void readPrompt(void);
+int readPrompt(void);
 void handl_ctrlc(int signal);
 char *getpath(char *cmd);
 void builtin_env(void);
