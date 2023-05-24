@@ -113,7 +113,7 @@ int (*builtin_functions[]) () = { &bi_exit, &bi_env };
 */
 int bi_exit()
 {
-	return (0);
+	exit(0);
 }
 /**
  * bi_env - 
@@ -121,12 +121,10 @@ int bi_exit()
 int bi_env()
 {
 	int i = 0;
-	char **env = environ;
 
-	while (env[i])
+	while (environ[i])
 	{
-		puts(env[i]);
-		putchar('\n');
+		puts(environ[i]);
 		i++;
 	}
 	return (1);

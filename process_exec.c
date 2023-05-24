@@ -35,26 +35,17 @@ void  handle_signale()
  */
 int readPrompt(void)
 {
-    int exiting = 0, notfound = 0, i, statu;
+    int exiting = 0, i, statu = 100, n_reads;
     size_t buf_size = 0;
     char **ar_parsed;
-    int n_reads;
-    /*char *buf = NULL;*/
 
     signal(SIGINT, handl_ctrlc);
-
     while (!exiting)
     {
-        /* type prompt */
         puts("($) ");
-
-        /* reads input */
         n_reads = getline(&buf, &buf_size, stdin);
-
-        /* handle empty input */
         if (strcmp(buf, "\n") == 0)
             continue;
-
         if (n_reads == -1)
         {
             putchar('\n');
@@ -67,26 +58,22 @@ int readPrompt(void)
             {
                 if (strcmp(ar_parsed[0], builtin_cmd[i]) == 0)
                 {
-                    notfound = 1;
+                    free(buf);
+                    free(ar_parsed);
                     statu = (*builtin_functions[i])();
-                    if (!statu)
-                    {
-                        free(ar_parsed);
-                        free(buf);
-                        exit (statu);
-                    }
                 }
             }
-            if (!notfound)
+            if (statu == 100)
                 execute_command(ar_parsed);
-
-            free(ar_parsed);
+            if (statu == 100)
+                free(ar_parsed);
         }
-
-        free(buf);
-        buf = NULL;
+        if (statu == 100)
+        {
+            free(buf);
+            buf = NULL;
+        }
     }
-
     return(1);
 }
 
