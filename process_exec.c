@@ -27,56 +27,55 @@ void builtin_env()
  */
 void readPrompt(void)
 {
-	int exiting = 0;
-	int exit_status = EXIT_SUCCESS;
-	size_t buf_size = 0;
-	char **ar_parsed;
-	int n_reads;
-	char *buf = NULL;
+    int exiting = 0;
+    int exit_status = EXIT_SUCCESS;
+    size_t buf_size = 0;
+    char **ar_parsed;
+    int n_reads;
+    char *buf = NULL;
 
-	signal(SIGINT, handl_ctrlc);
+    signal(SIGINT, handl_ctrlc);
 
-	while (1)
-	{
-		/* type prompt */
-		puts("($) ");
-		/* reads input */
-		n_reads = getline(&buf, &buf_size, stdin);
+    while (!exiting)
+    {
+        /* type prompt */
+        puts("($) ");
 
-		/* handle empty input */
+        /* reads input */
+        n_reads = getline(&buf, &buf_size, stdin);
 
-		if (strcmp(buf, "\n") == 0)
-		{
-			continue;
-		}
+        /* handle empty input */
+        if (strcmp(buf, "\n") == 0)
+            continue;
 
-		if (n_reads == -1)
-		{
-			putchar('\n');
-			exiting = 1;
-			exit_status = EXIT_FAILURE;
-		}
-		else
-		{
+        if (n_reads == -1)
+        {
+            putchar('\n');
+            exiting = 1;
+            exit_status = EXIT_FAILURE;
+        }
+        else
+        {
+            ar_parsed = parse(buf, " \t\n");
 
-			ar_parsed = parse(buf, " \t\n");
+            if (strcmp(ar_parsed[0], "exit") == 0)
+                exiting = 1;
+            else if (strcmp(ar_parsed[0], "env") == 0)
+                builtin_env();
+            else
+                execute_command(ar_parsed);
 
-			if (strcmp(ar_parsed[0], "exit") == 0)
-			{
-				exiting = 1;
-			}
-			else if (strcmp(ar_parsed[0], "env") == 0)
-			{
-				builtin_env();
-			}
-			else
-				execute_command(ar_parsed);
-		}
-		free(buf);
-		free(ar_parsed);
-		exit(exit_status);
-	}
+            free(ar_parsed);
+        }
+
+        free(buf);
+        buf = NULL;
+    }
+
+    exit(exit_status);
 }
+
+
 /**
  * execute_command - a function that executes the command line
  * @ar_parsed: the array of commands we want to excute
@@ -98,7 +97,7 @@ void execute_command(char **ar_parsed)
 		{
 			/* execute command */
 			execve(cmd, ar_parsed, environ);
-			exit(0);
+			//exit(0);
 		}
 
 		else
