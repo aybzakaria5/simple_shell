@@ -18,10 +18,9 @@ char *getpath(char *cmd)
 	{
 		if (stat(cmd, &st) == 0)
 		{
-			
-			 full_path = malloc(strlen(cmd) + 1);
-			 strcpy(full_path, cmd);
-			 path_exists = 1;
+			full_path = malloc(strlen(cmd) + 1);
+			strcpy(full_path, cmd);
+			path_exists = 1;
 
 		}
 	}
@@ -66,7 +65,7 @@ char *_getenv(const char *env_name)
 		env_copy = strdup(environ[env_count]);
 		key_finder = strtok(env_copy, "=");
 
-		if (strcmp(env_name, key_finder) == 0)
+		if (_strcmp(env_name, key_finder) == 0)
 		{
 			value = strdup(strtok(NULL, "\n"));
 		}
