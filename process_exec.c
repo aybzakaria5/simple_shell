@@ -1,4 +1,5 @@
 #include "shell.h"
+char *buf = NULL;
 
 /**
  * handl_ctrlc - handls the ctrl c signal
@@ -7,20 +8,33 @@
 
 void handl_ctrlc(int signal)
 {
-	(void)signal;
-	_puts("\n($) ");
+    (void)signal;
+
+    free(buf);
+    exit(EXIT_SUCCESS);
 }
-/**
- * builtin_env - print the environment variables
- *
-*/
-void builtin_env(void)
+void  handle_signale()
+{
+    if (signal(SIGINT, handl_ctrlc) == SIG_ERR)
+        {
+            /* If there is an error setting the signal handler*/
+            const char* error_message = "An error occurred while setting a signal handler.\n";
+            size_t message_length = strlen(error_message);
+            ssize_t bytes_written = write(STDERR_FILENO, error_message, message_length);
+                if (bytes_written < 0)
+                {
+                    perror("write");
+                }
+        exit(EXIT_FAILURE);
+    }
+}
+
+void builtin_env()
 {
 	int i = 0;
-
 	while (environ[i])
 	{
-		_puts(environ[i]);
+		puts(environ[i]);
 		i++;
 	}
 }
@@ -31,13 +45,12 @@ void builtin_env(void)
  */
 void readPrompt(void)
 {
-
     int exiting = 0;
     int exit_status = EXIT_SUCCESS;
     size_t buf_size = 0;
     char **ar_parsed;
     int n_reads;
-    char *buf = NULL;
+    /*char *buf = NULL;*/
 
     signal(SIGINT, handl_ctrlc);
 
@@ -46,9 +59,9 @@ void readPrompt(void)
         /* type prompt */
         puts("($) ");
 
-
         /* reads input */
         n_reads = getline(&buf, &buf_size, stdin);
+
         /* handle empty input */
         if (strcmp(buf, "\n") == 0)
             continue;
@@ -102,6 +115,7 @@ void execute_command(char **ar_parsed)
 		{
 			/* execute command */
 			execve(cmd, ar_parsed, environ);
+			
 		}
 
 		else
@@ -111,7 +125,7 @@ void execute_command(char **ar_parsed)
 	}
 	else
 	{
-		_puts("command not found");
+		puts("command not found");
 	}
 	if (cmd != ar_parsed[0])
 		free(cmd);
