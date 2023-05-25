@@ -18,11 +18,9 @@ char *getpath(char *cmd)
 	{
 		if (stat(cmd, &st) == 0)
 		{
-			
-			 full_path = malloc(strlen(cmd) + 1);
-			 strcpy(full_path, cmd);
-			 path_exists = 1;
-
+			full_path = malloc(strlen(cmd) + 1);
+			strcpy(full_path, cmd);
+			path_exists = 1;
 		}
 	}
 	else
@@ -106,8 +104,9 @@ char **parse(char *buffer, char *delim)
 
 char *builtin_cmd[] = { "exit", "env" };
 int (*builtin_functions[]) (char **) = { &bi_exit, &bi_env };
-/**bi_exit - exit the programm
- * @args - program arguments
+/**
+ * bi_exit - exit the program
+ * @args: program arguments
  *
  * Return: 0
 */
@@ -117,7 +116,10 @@ int bi_exit(char **args)
 	return (0);
 }
 /**
- * bi_env - 
+ * bi_env - prints the environment variable
+ * @args: array of arguments
+ *
+ * Return: 1
 */
 int bi_env(char **args)
 {
