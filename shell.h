@@ -13,7 +13,6 @@ extern char *builtin_cmd[];
 extern int (*builtin_functions[])(char **);
 int bi_exit(char **args);
 int bi_env(char **args);
-int bi_cd(char **args);
 void _puts(char *str);
 int _putchar(char c);
 char *_getenv(const char *env_name);

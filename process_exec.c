@@ -13,18 +13,14 @@ void handl_ctrlc(int signal)
 	free(buf);
 	exit(EXIT_SUCCESS);
 }
-/**
- * handle_signale - handle signal
-*/
-void handle_signale(void)
+void handle_signale()
 {
 	if (signal(SIGINT, handl_ctrlc) == SIG_ERR)
 	{
 		/* If there is an error setting the signal handler*/
-		const char *er_mes = "Error occurred while setting signal handler\n";
-		size_t message_length = strlen(er_mes);
-		ssize_t bytes_written = write(STDERR_FILENO, er_mes, message_length);
-
+		const char *error_message = "An error occurred while setting a signal handler.\n";
+		size_t message_length = strlen(error_message);
+		ssize_t bytes_written = write(STDERR_FILENO, error_message, message_length);
 		if (bytes_written < 0)
 		{
 			perror("write");
@@ -34,11 +30,8 @@ void handle_signale(void)
 }
 
 /**
- * readPrompt - reads the input from the user and sends it
- * to be excuted
- * @shell_name: the name of shell program
- *
- * Return: 1
+ *readPrompt - reads the input from the user and sends it
+ *to be excuted
  */
 int readPrompt(char *shell_name)
 {
@@ -47,14 +40,22 @@ int readPrompt(char *shell_name)
 	char **ar_parsed;
 	int n_reads;
 
+	/*char *buf = NULL;*/
 	signal(SIGINT, handl_ctrlc);
+
 	while (!exiting)
 	{
+		/* type prompt */
 		if (isatty(STDIN_FILENO))
 			puts("($) ");
+
+		/* reads input */
 		n_reads = getline(&buf, &buf_size, stdin);
+		/* handle empty input */
+
 		if (n_reads == -1)
 		{
+
 			if (isatty(STDIN_FILENO))
 				putchar('\n');
 			exiting = 1;
@@ -67,8 +68,9 @@ int readPrompt(char *shell_name)
 		{
 			if (n_reads > 0 && buf[n_reads - 1] == '\n')
 				buf[n_reads - 1] = '\0';
+
 			ar_parsed = parse(buf, " \t\n");
-			for (i = 0; i < 3; i++)
+			for (i = 0; i < 2; i++)
 			{
 				if (strcmp(ar_parsed[0], builtin_cmd[i]) == 0)
 				{
@@ -84,18 +86,20 @@ int readPrompt(char *shell_name)
 			}
 			if (!notfound)
 				execute_command(ar_parsed, shell_name);
+
 			free(ar_parsed);
 		}
+
 		free(buf);
 		buf = NULL;
 	}
+
 	return (1);
 }
 
 /**
  * execute_command - a function that executes the command line
  * @ar_parsed: the array of commands we want to excute
- * @shell_name: name of shell program
  *
  */
 
